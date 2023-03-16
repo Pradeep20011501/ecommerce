@@ -1,6 +1,6 @@
 import json
 from .models import *
-def  cookieCart(request):
+def cookieCart(request):
     try:
         cart = json.loads(request.COOKIES['cart'])
     except:
