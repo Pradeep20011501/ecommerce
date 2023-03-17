@@ -54,17 +54,15 @@ def updateitem(request):
         orderItem.quantity = (orderItem.quantity + 1)
     elif action == 'remove':
         orderItem.quantity = (orderItem.quantity - 1)
-        if orderItem.quantity == 0:
-            orderItem.delete()
 
-    if orderItem.quantity == 0:
-        orderItem.delete()
+    if orderItem.quantity <= 0:
+        if orderItem.pk is not None:  # check if the primary key is not None before deleting
+            orderItem.delete()
     else:
         orderItem.save()
 
-    if order.get_cart_items == 0:
-        order.delete()
-    return JsonResponse("item added", safe=False)
+    return JsonResponse('Item was added', safe=False)
+
 
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
